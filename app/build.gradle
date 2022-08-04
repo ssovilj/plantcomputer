@@ -1,0 +1,183 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.20'
+
+    // (Open) JavaFX Gradle plugin.
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+
+    // Gradle SSH Plugin.
+    // - Plugin which provides remote command execution and file transfer features.
+    id 'org.hidetake.ssh' version "2.10.1"
+
+    id 'org.springframework.boot' version '2.5.2'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+/**
+ * Version, group, JAR name (instead of module name).
+ */
+archivesBaseName = 'app'    // Instead of long name: 14_Hello_Mosquitto_LED_controller.jar
+group 'hr.unipu'
+version ''     // '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+/**
+ * Required JavaFX modules.
+ * - javafx.web dependency is used by TilesFX.
+ */
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls', 'javafx.web' ]
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    /* uncomment for cross-platform jar: */
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+    //runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+    //runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+
+    // TilesFX
+    // - Maven: https://mvnrepository.com/artifact/eu.hansolo/tilesfx
+    // - Github: https://github.com/HanSolo/tilesfx/wiki
+    implementation group: 'eu.hansolo', name: 'tilesfx', version: '11.48'
+
+
+    // Eclipse Paho (Client Mqttv3) - to communicate with an MQTT server.
+    // - Maven: https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3
+    // - Github: https://github.com/eclipse/paho.mqtt.java
+    implementation group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.2.5'
+
+
+    // https://mvnrepository.com/artifact/io.undertow/undertow-core
+    implementation group: 'io.undertow', name: 'undertow-core', version: '2.2.8.Final'
+    // https://mvnrepository.com/artifact/io.undertow/undertow-servlet
+    implementation group: 'io.undertow', name: 'undertow-servlet', version: '2.2.8.Final'
+    // https://mvnrepository.com/artifact/io.undertow/undertow-websockets-jsr
+    implementation group: 'io.undertow', name: 'undertow-websockets-jsr', version: '2.2.8.Final'
+
+
+    // Jackson - Java JSON library.
+    // - Maven: https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    // - GitHub: https://github.com/FasterXML/jackson
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.3'
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+//java {
+//    modularity.inferModulePath = true
+//}
+
+/**
+ * Choosing main class (same for Java and Kotlin code).
+ */
+application {
+    // Java code. Can be either: LedControllerAppJava or LauncherJava. Essential only for 'run' task.
+    mainClassName = 'hr.unipu.LauncherJava'
+    //mainClassName = 'hr.unipu.FoodComputerControllerApplicationJava'
+
+    // Kotlin code.  (FoodComputerControllerApp if class and filename are not the same).
+    //mainClassName = 'hr.unipu.FoodComputerControllerApplication'
+}
+
+/**
+ * Because some file encoding errors - (čžš etc.).
+ */
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+/**
+ * Remote host.
+ */
+remotes {
+    rpi01 {
+        host = '192.168.15.228'   // or VG: '192.168.5.10', ZG: '192.168.0.31', Ethernet: '192.168.3.2', 'raspberrypi.local'
+        user = 'pi'
+        password = 'raspberry'
+    }
+}
+
+/**
+ * Create Fat Jar.
+ */
+jar {
+    manifest {
+        attributes 'Main-Class': 'hr.unipu.LauncherJava'    // package.myMainClassName
+        //attributes 'Main-Class': 'hr.unipu.FoodComputerControllerApplicationJava'    // package.myMainClassName
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+/**
+ * Deploy task.
+ */
+task deploy {
+    dependsOn 'jar'
+    doLast {
+        ssh.run {
+            session(remotes.rpi01) {
+                // Testing
+                println("Root direktorij je: ${project.rootDir}")
+                println("Projektni direktorij je: ${project.projectDir}")
+                println("Build direktorij je: ${project.buildDir}")
+                println("Gradle direktorij je: ${project.rootDir}\\.gradle")
+
+
+                // Copy within working computer.
+                copy {
+                    exclude "**/.gradle/**"
+                    exclude "**/Food_Computer_Gateway/**"
+                    from "${project.rootDir}"
+                    into "$buildDir/Food_Computer_Gateway"
+                }
+
+                // Remove old RPi project first.
+                remove '/home/pi/Documents/JAVA-KOTLIN/Food_Computer_Gateway'
+
+
+                // Deploy at RPi.
+                put from: "$buildDir/Food_Computer_Gateway",
+                    into: "/home/pi/Documents/JAVA-KOTLIN"
+
+
+                // Execute (not working remotely).
+                //execute 'chmod +x ./gradlew'
+                //execute './gradlew run'
+
+
+                // Run Jar at Rpi.
+                execute "pwd"
+                // Not possible to run JavaFX from Gradle (Unable to open DISPLAY). Need to run it from RPi.
+                //execute "java -jar /home/pi/Documents/JAVA-KOTLIN/Food_Computer_Gateway/app/build/libs/app.jar"
+
+            }
+        }
+    }
+}
+
+/**
+ * Print classpath (for JShell).
+ */
+task printClasspath {
+    doLast {
+        println sourceSets.main.runtimeClasspath.asPath
+    }
+}

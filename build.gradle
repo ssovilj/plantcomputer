@@ -1,0 +1,16 @@
+/**
+ * Root build script.
+ */
+
+group 'hr.unipu'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    version = '1.0'
+}
