@@ -3,7 +3,7 @@ package hr.unipu.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.unipu.event.EventManager;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import javafx.application.Platform;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -32,7 +32,7 @@ public class MqttClientCallback implements MqttCallback {
     public void messageArrived(String mqttTopic, MqttMessage mqttMessage) {
         String jsonMessage = new String(mqttMessage.getPayload());
 
-        if (mqttTopic.equals("foodComputerCommand")) {
+        if (mqttTopic.equals("plantComputerCommand")) {
             System.out.println("Filtered MQTT topic: \"" + mqttTopic + "\".");
             System.out.println("Message received:\n\t" + jsonMessage);
             Platform.runLater(() -> {
@@ -41,7 +41,7 @@ public class MqttClientCallback implements MqttCallback {
 
             });
 
-        } else if (mqttTopic.equals("foodComputerState")) {
+        } else if (mqttTopic.equals("plantComputerState")) {
             System.out.println("Filtered MQTT topic: \"" + mqttTopic + "\".");
             System.out.println("Message received:\n\t" + jsonMessage);
             Platform.runLater(() -> {
@@ -63,8 +63,8 @@ public class MqttClientCallback implements MqttCallback {
         //TypeFactory typeFactory = objectMapper.getTypeFactory();
         try {
             //List<FoodComputerCommand> parsedListActuatorCommands = objectMapper.readValue(jsonMessage, typeFactory.constructCollectionType(List.class, FoodComputerCommand.class));
-            FoodComputerCommand[] parsedListActuatorCommands = objectMapper.readValue(jsonMessage, FoodComputerCommand[].class);
-            for (FoodComputerCommand parsedListActuatorCommand : parsedListActuatorCommands) {
+            PlantComputerCommand[] parsedListActuatorCommands = objectMapper.readValue(jsonMessage, PlantComputerCommand[].class);
+            for (PlantComputerCommand parsedListActuatorCommand : parsedListActuatorCommands) {
                 //System.out.println(parsedListActuatorCommand.toStringCommand());
                 eventManager.sendEvent(parsedListActuatorCommand);
             }
@@ -81,8 +81,8 @@ public class MqttClientCallback implements MqttCallback {
     private void parseJsonMessage2Readings(String jsonMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            FoodComputerCommand[] parsedListSensorReadings = objectMapper.readValue(jsonMessage, FoodComputerCommand[].class);
-            for (FoodComputerCommand parsedListActuatorReading : parsedListSensorReadings) {
+            PlantComputerCommand[] parsedListSensorReadings = objectMapper.readValue(jsonMessage, PlantComputerCommand[].class);
+            for (PlantComputerCommand parsedListActuatorReading : parsedListSensorReadings) {
                 //System.out.println(parsedListActuatorReading.toStringCommand());
                 eventManager.sendEvent(parsedListActuatorReading);
             }

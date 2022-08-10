@@ -1,15 +1,15 @@
 package hr.unipu.event;
 
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 
 public interface EventListener {
 
     /**
-     * Whenever a new {@link FoodComputerCommand} is received from Mosquitto, all listeners will be notified, so they can handle
+     * Whenever a new {@link PlantComputerCommand} is received from Mosquitto, all listeners will be notified, so they can handle
      * it for their own use.
      *
-     * @param foodComputerCommand {@link FoodComputerCommand}
+     * @param plantComputerCommand {@link PlantComputerCommand}
      */
-    void onQueueMessage(FoodComputerCommand foodComputerCommand);
+    void onQueueMessage(PlantComputerCommand plantComputerCommand);
 
 }

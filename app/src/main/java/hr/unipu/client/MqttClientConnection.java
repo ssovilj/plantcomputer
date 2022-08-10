@@ -1,7 +1,7 @@
 package hr.unipu.client;
 
 import hr.unipu.event.EventManager;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -61,11 +61,11 @@ public class MqttClientConnection {
     }
 
 
-    public void sendMessage(FoodComputerCommand foodComputerCommand, String mqttTopic) {
+    public void sendMessage(PlantComputerCommand plantComputerCommand, String mqttTopic) {
         this.mqttTopic = mqttTopic;
 
-        //this.sendMessage(foodComputerCommand.toStringCommand());      // Sending old command e.g. 100:APLN 1:on
-        this.sendMessage(foodComputerCommand.toJsonCommand(), mqttTopic);          // Sending JSON command.
+        //this.sendMessage(plantComputerCommand.toStringCommand());      // Sending old command e.g. 100:APLN 1:on
+        this.sendMessage(plantComputerCommand.toJsonCommand(), mqttTopic);          // Sending JSON command.
     }
 
 

@@ -8,8 +8,8 @@ import eu.hansolo.tilesfx.tools.FlowGridPane;
 import hr.unipu.client.MqttClientConnection;
 import hr.unipu.event.EventListener;
 import hr.unipu.event.EventManager;
-import hr.unipu.foodcomputer.FoodComputerAction;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerAction;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import hr.unipu.recipe.RecipeHandler;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -52,10 +52,10 @@ public class UiWindow extends FlowGridPane implements EventListener {
     private final EventManager eventManager;
     private static boolean blockSending = false;
 
-    public static FoodComputerAction selectedFoodComputerAction = FoodComputerAction.UNDEFINED;
-    public static List<FoodComputerCommand> listActuatorCommands = new ArrayList<>();
-    public static List<FoodComputerCommand> listReadingCommands = new ArrayList<>();
-    public static List<FoodComputerCommand> listStateReadings = new ArrayList<>();
+    public static PlantComputerAction selectedPlantComputerAction = PlantComputerAction.UNDEFINED;
+    public static List<PlantComputerCommand> listActuatorCommands = new ArrayList<>();
+    public static List<PlantComputerCommand> listReadingCommands = new ArrayList<>();
+    public static List<PlantComputerCommand> listStateReadings = new ArrayList<>();
 
     private static final Random RND = new Random();
 
@@ -605,10 +605,10 @@ public class UiWindow extends FlowGridPane implements EventListener {
             //System.out.println("Switch pressed.");
             if (this.btGrowLight.isActive()) {
                 //System.out.println("Switch is active.");
-                this.setAction(FoodComputerAction.LIGHT_TURN_ON);
+                this.setAction(PlantComputerAction.LIGHT_TURN_ON);
             } else {
                 //System.out.println("Switch is NOT active.");
-                this.setAction(FoodComputerAction.LIGHT_TURN_OFF);
+                this.setAction(PlantComputerAction.LIGHT_TURN_OFF);
             }
         });
 
@@ -622,9 +622,9 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 .build();
         btHumidifier.setOnSwitchPressed(e -> {
             if (this.btHumidifier.isActive()) {
-                this.setAction(FoodComputerAction.HUMIDIFIER_TURN_ON);
+                this.setAction(PlantComputerAction.HUMIDIFIER_TURN_ON);
             } else {
-                this.setAction(FoodComputerAction.HUMIDIFIER_TURN_OFF);
+                this.setAction(PlantComputerAction.HUMIDIFIER_TURN_OFF);
             }
         });
 
@@ -638,9 +638,9 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 .build();
         btCoolingFan.setOnSwitchPressed(e -> {
             if (this.btCoolingFan.isActive()) {
-                this.setAction(FoodComputerAction.CHILLER_FAN_TURN_ON);
+                this.setAction(PlantComputerAction.CHILLER_FAN_TURN_ON);
             } else {
-                this.setAction(FoodComputerAction.CHILLER_FAN_TURN_OFF);
+                this.setAction(PlantComputerAction.CHILLER_FAN_TURN_OFF);
             }
         });
 
@@ -654,9 +654,9 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 .build();
         btChamberFan.setOnSwitchPressed(e -> {
             if (this.btChamberFan.isActive()) {
-                this.setAction(FoodComputerAction.CHAMBER_FAN_TURN_ON);
+                this.setAction(PlantComputerAction.CHAMBER_FAN_TURN_ON);
             } else {
-                this.setAction(FoodComputerAction.CHAMBER_FAN_TURN_OFF);
+                this.setAction(PlantComputerAction.CHAMBER_FAN_TURN_OFF);
             }
         });
 
@@ -670,9 +670,9 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 .build();
         btHeater.setOnSwitchPressed(e -> {
             if (this.btHeater.isActive()) {
-                this.setAction(FoodComputerAction.HEATER_TURN_ON);
+                this.setAction(PlantComputerAction.HEATER_TURN_ON);
             } else {
-                this.setAction(FoodComputerAction.HEATER_TURN_OFF);
+                this.setAction(PlantComputerAction.HEATER_TURN_OFF);
             }
         });
 
@@ -686,9 +686,9 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 .build();
         btWaterCirculationPump.setOnSwitchPressed(e -> {
             if (this.btWaterCirculationPump.isActive()) {
-                this.setAction(FoodComputerAction.WATER_PUMP_TURN_ON);
+                this.setAction(PlantComputerAction.WATER_PUMP_TURN_ON);
             } else {
-                this.setAction(FoodComputerAction.WATER_PUMP_TURN_OFF);
+                this.setAction(PlantComputerAction.WATER_PUMP_TURN_OFF);
             }
         });
 
@@ -764,19 +764,19 @@ public class UiWindow extends FlowGridPane implements EventListener {
 
                     // Sending command for reading sensors & actuators to MQTT broker.
                     listReadingCommands.clear();
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.TEMPERATURE_AIR_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDITY_AIR_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.CONDUCTIVITY_WATER_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.PH_WATER_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.TEMPERATURE_WATER_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_INTENSITY_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_AIR_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDITY_AIR_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.CONDUCTIVITY_WATER_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.PH_WATER_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_WATER_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_INTENSITY_STATE_READ));
 
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.COOLING_FAN_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_STATE_READ));
-                    listReadingCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.COOLING_FAN_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_STATE_READ));
+                    listReadingCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_STATE_READ));
 
                     UiWindow.sendMessageForReadingStates();
 
@@ -822,25 +822,25 @@ public class UiWindow extends FlowGridPane implements EventListener {
                      */
                     // Sending command for reading sensors to MQTT broker.
                     listStateReadings.clear();
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.TEMPERATURE_AIR_STATE.setActionValue(rndValue1.toString())));
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.HUMIDITY_AIR_STATE.setActionValue(rndValue2.toString())));
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.CONDUCTIVITY_WATER_STATE.setActionValue(rndValue3.toString())));
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.PH_WATER_STATE.setActionValue(rndValue4.toString())));
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.TEMPERATURE_WATER_STATE.setActionValue(rndValue5.toString())));
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.LIGHT_INTENSITY_STATE.setActionValue(rndValue6.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_AIR_STATE.setActionValue(rndValue1.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDITY_AIR_STATE.setActionValue(rndValue2.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CONDUCTIVITY_WATER_STATE.setActionValue(rndValue3.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.PH_WATER_STATE.setActionValue(rndValue4.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_WATER_STATE.setActionValue(rndValue5.toString())));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_INTENSITY_STATE.setActionValue(rndValue6.toString())));
 
                     String isBtGrowLightOn; if (btGrowLight.isActive())  isBtGrowLightOn="on"; else isBtGrowLightOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.LIGHT_STATE.setActionValue(isBtGrowLightOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_STATE.setActionValue(isBtGrowLightOn)));
                     String isBtHumidifierOn; if (btHumidifier.isActive())  isBtHumidifierOn="on"; else isBtHumidifierOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_STATE.setActionValue(isBtHumidifierOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_STATE.setActionValue(isBtHumidifierOn)));
                     String isBtCoolingFanOn; if (btCoolingFan.isActive())  isBtCoolingFanOn="on"; else isBtCoolingFanOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.COOLING_FAN_STATE.setActionValue(isBtCoolingFanOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.COOLING_FAN_STATE.setActionValue(isBtCoolingFanOn)));
                     String isBtChamberFanOn; if (btChamberFan.isActive())  isBtChamberFanOn="on"; else isBtChamberFanOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_STATE.setActionValue(isBtChamberFanOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_STATE.setActionValue(isBtChamberFanOn)));
                     String isBtHeaterOn; if (btHeater.isActive())  isBtHeaterOn="on"; else isBtHeaterOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_STATE.setActionValue(isBtHeaterOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_STATE.setActionValue(isBtHeaterOn)));
                     String isBtWaterCirculationPumpOn; if (btWaterCirculationPump.isActive())  isBtWaterCirculationPumpOn="on"; else isBtWaterCirculationPumpOn="off";
-                    listStateReadings.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_STATE.setActionValue(isBtWaterCirculationPumpOn)));
+                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_STATE.setActionValue(isBtWaterCirculationPumpOn)));
 
                     UiWindow.sendMessageStateReadings();
 
@@ -861,40 +861,40 @@ public class UiWindow extends FlowGridPane implements EventListener {
 
     /**
      * Handle the chosen effect from a button or a Mosquitto message to enable/disable the available UI elements and
-     * highlight the button of the selected {@link FoodComputerAction}.
+     * highlight the button of the selected {@link PlantComputerAction}.
      *
-     * @param foodComputerAction {@link FoodComputerAction}
+     * @param plantComputerAction {@link PlantComputerAction}
      */
-    private void setAction(FoodComputerAction foodComputerAction) {
+    private void setAction(PlantComputerAction plantComputerAction) {
         // Single actuator command.
-        UiWindow.selectedFoodComputerAction = foodComputerAction;
+        UiWindow.selectedPlantComputerAction = plantComputerAction;
 
         // Creating list of actuator commands.
         UiWindow.listActuatorCommands.clear();
         if (btGrowLight.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_TURN_OFF));
         if (btHumidifier.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_TURN_OFF));
         if (btCoolingFan.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHILLER_FAN_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHILLER_FAN_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHILLER_FAN_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHILLER_FAN_TURN_OFF));
         if (btChamberFan.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_TURN_OFF));
         if (btHeater.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_OFF));
         if (btWaterCirculationPump.isActive())
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_TURN_ON));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_TURN_ON));
         else
-            listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_TURN_OFF));
+            listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_TURN_OFF));
 
         UiWindow.sendMessageForActuators();
     }
@@ -910,12 +910,12 @@ public class UiWindow extends FlowGridPane implements EventListener {
         }
 
         // Create single actuator command.
-        FoodComputerCommand foodComputerCommand = new FoodComputerCommand(
-                UiWindow.selectedFoodComputerAction
+        PlantComputerCommand plantComputerCommand = new PlantComputerCommand(
+                UiWindow.selectedPlantComputerAction
         );
 
-        //System.out.println("Sending String command to Mosquitto: " + foodComputerCommand.toStringCommand());
-        //System.out.println("Sending JSON command to Mosquitto: " + foodComputerCommand.toJsonCommand());
+        //System.out.println("Sending String command to Mosquitto: " + plantComputerCommand.toStringCommand());
+        //System.out.println("Sending JSON command to Mosquitto: " + plantComputerCommand.toJsonCommand());
 
         /**
          * Sending message command for actuators to MQTT broker.
@@ -924,12 +924,12 @@ public class UiWindow extends FlowGridPane implements EventListener {
         if (mqttClientConnectionExist) {
             final boolean isMqttClientConnected = mqttClientConnection.getMqttClient().isConnected();
             if (isMqttClientConnected) {
-                //this.mqttClientConnection.sendMessage(foodComputerCommand, "foodComputerCommand");  // Sending single selected command.
+                //this.mqttClientConnection.sendMessage(plantComputerCommand, "plantComputerCommand");  // Sending single selected command.
                 final ObjectMapper mapper = new ObjectMapper();
                 try {
                     // Sending list of commands for actuators.
                     //System.out.println("Sending commands for actuators:\n" + mapper.writeValueAsString(listActuatorCommands));
-                    mqttClientConnection.sendMessage(mapper.writeValueAsString(listActuatorCommands), "foodComputerCommand");
+                    mqttClientConnection.sendMessage(mapper.writeValueAsString(listActuatorCommands), "plantComputerCommand");
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
@@ -939,7 +939,7 @@ public class UiWindow extends FlowGridPane implements EventListener {
         /**
          * Adding short log to UI.
          */
-        logText.add(foodComputerCommand.toStringCommand());
+        logText.add(plantComputerCommand.toStringCommand());
         if (logText.size() > 5) logText.remove();      // FIFO, remove the oldest.
         LinkedList logTextReversed = (LinkedList) logText.clone();
         Collections.reverse(logTextReversed);
@@ -960,8 +960,8 @@ public class UiWindow extends FlowGridPane implements EventListener {
             return;
         }
 
-        //System.out.println("Sending String command to Mosquitto: " + foodComputerCommand.toStringCommand());
-        //System.out.println("Sending JSON command to Mosquitto: " + foodComputerCommand.toJsonCommand());
+        //System.out.println("Sending String command to Mosquitto: " + plantComputerCommand.toStringCommand());
+        //System.out.println("Sending JSON command to Mosquitto: " + plantComputerCommand.toJsonCommand());
 
         // Sending message command for actuators to MQTT broker.
         final boolean mqttClientConnectionExist = mqttClientConnection != null;
@@ -972,7 +972,7 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 try {
                     // Sending list of commands for actuators.
                     //System.out.println("Sending commands for sensors:\n" + mapper.writeValueAsString(listSensorCommands));
-                    mqttClientConnection.sendMessage( mapper.writeValueAsString(listReadingCommands), "foodComputerCommand");
+                    mqttClientConnection.sendMessage( mapper.writeValueAsString(listReadingCommands), "plantComputerCommand");
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
@@ -992,8 +992,8 @@ public class UiWindow extends FlowGridPane implements EventListener {
             return;
         }
 
-        //System.out.println("Sending String command to Mosquitto: " + foodComputerCommand.toStringCommand());
-        //System.out.println("Sending JSON command to Mosquitto: " + foodComputerCommand.toJsonCommand());
+        //System.out.println("Sending String command to Mosquitto: " + plantComputerCommand.toStringCommand());
+        //System.out.println("Sending JSON command to Mosquitto: " + plantComputerCommand.toJsonCommand());
 
         // Sending message "test" readings for sensors and actuators to MQTT broker.
         final boolean mqttClientConnectionExist = UiWindow.mqttClientConnection != null;
@@ -1004,7 +1004,7 @@ public class UiWindow extends FlowGridPane implements EventListener {
                 try {
                     // Sending list of readings of sensors.
                     //System.out.println("Sending readings from sensors:\n" + mapper.writeValueAsString(listSensorReadings));
-                    UiWindow.mqttClientConnection.sendMessage( mapper.writeValueAsString(listStateReadings), "foodComputerState");
+                    UiWindow.mqttClientConnection.sendMessage( mapper.writeValueAsString(listStateReadings), "plantComputerState");
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
@@ -1015,34 +1015,34 @@ public class UiWindow extends FlowGridPane implements EventListener {
 
 
     /**
-     * {@link FoodComputerCommand} received from Mosquitto.
+     * {@link PlantComputerCommand} received from Mosquitto.
      *
      *
-     * @param foodComputerCommand The {@link FoodComputerCommand}
+     * @param plantComputerCommand The {@link PlantComputerCommand}
      */
     @Override
-    public void onQueueMessage(FoodComputerCommand foodComputerCommand) {
+    public void onQueueMessage(PlantComputerCommand plantComputerCommand) {
         UiWindow.blockSending = true;
 
-        System.out.println("Command received from Mosquitto: " + foodComputerCommand.toStringCommand());
+        System.out.println("Command received from Mosquitto: " + plantComputerCommand.toStringCommand());
 
         // Sensor readings + update values in UI:
-        if (foodComputerCommand.getId().equals("500") && foodComputerCommand.getActionName().equals("SATM 1")) {
-            value1.set(Double.parseDouble(foodComputerCommand.getActionValue()));
-        } else if (foodComputerCommand.getId().equals("510") && foodComputerCommand.getActionName().equals("SAHU 1")) {
-            value2.set(Double.parseDouble(foodComputerCommand.getActionValue()));
-        } else if (foodComputerCommand.getId().equals("520") && foodComputerCommand.getActionName().equals("SWEC 1")) {
-            value3.set(Double.parseDouble(foodComputerCommand.getActionValue()));
-        } else if (foodComputerCommand.getId().equals("530") && foodComputerCommand.getActionName().equals("SWPH 1")) {
-            value4.set(Double.parseDouble(foodComputerCommand.getActionValue()));
-        } else if (foodComputerCommand.getId().equals("540") && foodComputerCommand.getActionName().equals("SWTM 1")) {
-            value5.set(Double.parseDouble(foodComputerCommand.getActionValue()));
-        } else if (foodComputerCommand.getId().equals("550") && foodComputerCommand.getActionName().equals("SLIN 1")) {
-            value6.set(Double.parseDouble(foodComputerCommand.getActionValue()));
+        if (plantComputerCommand.getId().equals("500") && plantComputerCommand.getActionName().equals("SATM 1")) {
+            value1.set(Double.parseDouble(plantComputerCommand.getActionValue()));
+        } else if (plantComputerCommand.getId().equals("510") && plantComputerCommand.getActionName().equals("SAHU 1")) {
+            value2.set(Double.parseDouble(plantComputerCommand.getActionValue()));
+        } else if (plantComputerCommand.getId().equals("520") && plantComputerCommand.getActionName().equals("SWEC 1")) {
+            value3.set(Double.parseDouble(plantComputerCommand.getActionValue()));
+        } else if (plantComputerCommand.getId().equals("530") && plantComputerCommand.getActionName().equals("SWPH 1")) {
+            value4.set(Double.parseDouble(plantComputerCommand.getActionValue()));
+        } else if (plantComputerCommand.getId().equals("540") && plantComputerCommand.getActionName().equals("SWTM 1")) {
+            value5.set(Double.parseDouble(plantComputerCommand.getActionValue()));
+        } else if (plantComputerCommand.getId().equals("550") && plantComputerCommand.getActionName().equals("SLIN 1")) {
+            value6.set(Double.parseDouble(plantComputerCommand.getActionValue()));
         }
 
         // Redundant
-        //this.setAction(FoodComputerAction.fromId(foodComputerCommand.getId()));
+        //this.setAction(FoodComputerAction.fromId(plantComputerCommand.getId()));
 
         UiWindow.blockSending = false;
 

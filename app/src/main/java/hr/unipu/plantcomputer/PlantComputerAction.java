@@ -1,10 +1,10 @@
-package hr.unipu.foodcomputer;
+package hr.unipu.plantcomputer;
 
 /**
  * The list of available Food Computer actions.
  * By using enums with variables, we can define here which UI-elements must be enabled when an action is selected.
  */
-public enum FoodComputerAction {
+public enum PlantComputerAction {
 
     // TODO Delete all comments from previous code or translate them to English.
 
@@ -139,26 +139,26 @@ public enum FoodComputerAction {
     private final String actionName;
     private String actionValue;
 
-    FoodComputerAction(String id, String actionName, String actionValue) {
+    PlantComputerAction(String id, String actionName, String actionValue) {
         this.id = id;
         this.actionName = actionName;
         this.actionValue = actionValue;
     }
 
-    public static FoodComputerAction fromId(String id) {
-        for (FoodComputerAction foodComputerAction : FoodComputerAction.values()) {
-            if (foodComputerAction.id.equals(id)) {
-                return foodComputerAction;
+    public static PlantComputerAction fromId(String id) {
+        for (PlantComputerAction plantComputerAction : PlantComputerAction.values()) {
+            if (plantComputerAction.id.equals(id)) {
+                return plantComputerAction;
             }
         }
         return UNDEFINED;
     }
 
-    public static FoodComputerAction fromNameAndValue(String actionName, String actionValue) {
-        for (FoodComputerAction foodComputerAction : FoodComputerAction.values()) {
-            if (foodComputerAction.actionName.equals(actionName) &&
-                    foodComputerAction.actionValue.equals(actionValue)) {
-                return foodComputerAction;
+    public static PlantComputerAction fromNameAndValue(String actionName, String actionValue) {
+        for (PlantComputerAction plantComputerAction : PlantComputerAction.values()) {
+            if (plantComputerAction.actionName.equals(actionName) &&
+                    plantComputerAction.actionValue.equals(actionValue)) {
+                return plantComputerAction;
             }
         }
         return UNDEFINED;
@@ -173,7 +173,7 @@ public enum FoodComputerAction {
     public String getActionValue() {
         return actionValue;
     }
-    public FoodComputerAction setActionValue(String actionValue) {
+    public PlantComputerAction setActionValue(String actionValue) {
         this.actionValue = actionValue;
         return this;
     }

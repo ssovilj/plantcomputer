@@ -1,29 +1,29 @@
 package hr.unipu.client;
 
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Helper class to add a {@link FoodComputerCommand} to a table with a timestamp.
+ * Helper class to add a {@link PlantComputerCommand} to a table with a timestamp.
  */
 public class ReceivedMessage {
 
     private final String timestamp;
-    private final FoodComputerCommand foodComputerCommand;
+    private final PlantComputerCommand plantComputerCommand;
 
     private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public ReceivedMessage(FoodComputerCommand foodComputerCommand) {
+    public ReceivedMessage(PlantComputerCommand plantComputerCommand) {
         this.timestamp = LocalDateTime.now().format(dateFormat);
-        this.foodComputerCommand = foodComputerCommand;
+        this.plantComputerCommand = plantComputerCommand;
     }
 
     public String getTimestamp() {
         return timestamp;
     }
 
-    public FoodComputerCommand getFoodComputerCommand() {
-        return foodComputerCommand;
+    public PlantComputerCommand getPlantComputerCommand() {
+        return plantComputerCommand;
     }
 }

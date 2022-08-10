@@ -1,7 +1,7 @@
 package hr.unipu.recipe;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hr.unipu.foodcomputer.RecipeDTO;
+import hr.unipu.plantcomputer.RecipeDTO;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

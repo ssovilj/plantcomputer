@@ -8,7 +8,7 @@ package hr.unipu;
 public class LauncherJava {
 
     public static void main(String[] args) {
-        FoodComputerApplicationJava.main(args);
+        PlantComputerApplicationJava.main(args);
     }
 
 }

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * - 'Application' class provides lifecycle functions (initializing, launching, starting, stopping) during runtime.
  * - Mechanism to launch JavaFX GUI components separate from the 'main' thread.
  */
-public class FoodComputerApplicationJava extends Application {
+public class PlantComputerApplicationJava extends Application {
 
 
     /**
@@ -41,11 +41,11 @@ public class FoodComputerApplicationJava extends Application {
         EventManager eventManager = new EventManager();
 
         // 5.17 (Vg), 0.30 (Zg), 3.2 (Ethernet direct)
-        // Fonović MQTT public IP: serv.ovh.dfo.ninja; topics: "foodComputerCommand" i "foodComputerState"
-        //QueueClient queueClient = new QueueClient(eventManager, "192.168.0.21", "foodComputerCommand");
+        // Fonović MQTT public IP: serv.ovh.dfo.ninja; topics: "plantComputerCommand" i "plantComputerState"
+        //QueueClient queueClient = new QueueClient(eventManager, "192.168.0.21", "plantComputerCommand");
         MqttClientConnection mqttClientConnection = new MqttClientConnection( "serv.ovh.dfo.ninja", eventManager);
-        mqttClientConnection.subscribe("foodComputerCommand");
-        mqttClientConnection.subscribe("foodComputerState");
+        mqttClientConnection.subscribe("plantComputerCommand");
+        mqttClientConnection.subscribe("plantComputerState");
 
         try {
             Undertow server = Undertow.builder()

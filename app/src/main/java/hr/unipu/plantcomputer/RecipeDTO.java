@@ -1,9 +1,8 @@
-package hr.unipu.foodcomputer;
+package hr.unipu.plantcomputer;
 
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

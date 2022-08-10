@@ -1,63 +1,62 @@
-package hr.unipu.foodcomputer;
+package hr.unipu.plantcomputer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.CompactStringObjectMap;
 
 /**
  * FoodComputerCommand as it is exchanged with the Arduino.
  * - creates Mosquitto command string;
  */
-public class FoodComputerCommand {
+public class PlantComputerCommand {
     private String id;
     private String actionName;
     private String actionValue;
-    private FoodComputerAction foodComputerAction;
+    private PlantComputerAction plantComputerAction;
 
     /**
      * No argument constructor.
      */
-    public FoodComputerCommand() {
-        this.foodComputerAction = FoodComputerAction.UNDEFINED;
-        this.id = foodComputerAction.getId();
-        this.actionName = foodComputerAction.getActionName();
-        this.actionValue = foodComputerAction.getActionValue();
+    public PlantComputerCommand() {
+        this.plantComputerAction = PlantComputerAction.UNDEFINED;
+        this.id = plantComputerAction.getId();
+        this.actionName = plantComputerAction.getActionName();
+        this.actionValue = plantComputerAction.getActionValue();
     }
 
     /**
      * Constructor with arguments.
      */
-    public FoodComputerCommand(FoodComputerAction foodComputerAction) {
-        this.foodComputerAction = foodComputerAction;
-        this.id = foodComputerAction.getId();
-        this.actionName = foodComputerAction.getActionName();
-        this.actionValue = foodComputerAction.getActionValue();
+    public PlantComputerCommand(PlantComputerAction plantComputerAction) {
+        this.plantComputerAction = plantComputerAction;
+        this.id = plantComputerAction.getId();
+        this.actionName = plantComputerAction.getActionName();
+        this.actionValue = plantComputerAction.getActionValue();
     }
 
     /**
-     * Initialize a {@link FoodComputerCommand} from a ":"-separated String as exchanged via Mosquitto.
+     * Initialize a {@link PlantComputerCommand} from a ":"-separated String as exchanged via Mosquitto.
      * Example: 100                 // id for turning actuator (for light) on
      *          100 : ALPN 1 : on
      *          ALPN 1 : on         // turn actuator (for light) on
      *          SWTM 1 : read       // read sensor (for temperature)
      * @param command {@link String}
      */
-    public FoodComputerCommand(String command) {
-        FoodComputerAction foodComputerAction = FoodComputerAction.UNDEFINED;
+    public PlantComputerCommand(String command) {
+        PlantComputerAction plantComputerAction = PlantComputerAction.UNDEFINED;
         String[] parts = command.split(":");
 
         // e.g. 100
-        foodComputerAction = parts.length == 1 ? FoodComputerAction.fromId(parts[0].trim()) : FoodComputerAction.UNDEFINED;
+        plantComputerAction = parts.length == 1 ? PlantComputerAction.fromId(parts[0].trim()) : PlantComputerAction.UNDEFINED;
 
         // e.g. ALPN 1 : on
         if (parts.length == 2) {
             boolean containsOnlyNumbers = !parts[0].trim().contains("[a-zA-Z]+");
             if (containsOnlyNumbers) {
-                foodComputerAction = FoodComputerAction.UNDEFINED;
+                plantComputerAction = PlantComputerAction.UNDEFINED;
             } else {
                 this.actionName = parts[0].trim();
                 this.actionValue = parts[1].trim();
-                foodComputerAction = FoodComputerAction.fromNameAndValue(actionName, actionValue);
+                plantComputerAction = PlantComputerAction.fromNameAndValue(actionName, actionValue);
             }
         }
 
@@ -66,12 +65,12 @@ public class FoodComputerCommand {
             this.id = parts[0].trim();
             this.actionName = parts[1].trim();
             this.actionValue = parts[2].trim();
-            foodComputerAction = FoodComputerAction.fromId(id);     // ID is dominant.
+            plantComputerAction = PlantComputerAction.fromId(id);     // ID is dominant.
         }
 
-        this.id = foodComputerAction.getId();
-        this.actionName = foodComputerAction.getActionName();
-        this.actionValue = foodComputerAction.getActionValue();
+        this.id = plantComputerAction.getId();
+        this.actionName = plantComputerAction.getActionName();
+        this.actionValue = plantComputerAction.getActionValue();
 
     }
 
@@ -116,8 +115,8 @@ public class FoodComputerCommand {
     public String getActionValue() {
         return actionValue;
     }
-    public FoodComputerAction getFoodComputerAction() {
-        return foodComputerAction;
+    public PlantComputerAction getFoodComputerAction() {
+        return plantComputerAction;
     }
 
 }

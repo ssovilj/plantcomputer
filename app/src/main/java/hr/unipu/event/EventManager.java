@@ -1,18 +1,18 @@
 package hr.unipu.event;
 
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds list of listeners, adds new listener, sends event (food computer command) to
+ * Holds list of listeners, adds new listener, sends event (plant computer command) to
  * all listeners, with method from EventListener interface - onQueueMessage().
  */
 public class EventManager {
 
     /**
-     * The list with components to be notified of a new food computer Command received from Mosquitto.
+     * The list with components to be notified of a new plant computer Command received from Mosquitto.
      */
     private List<EventListener> eventListeners = new ArrayList<>();
 
@@ -31,10 +31,10 @@ public class EventManager {
      * Used by Mosquitto callback to forward a received messaged to all components in the application who were added
      * as a listener.
      *
-     * @param foodComputerCommand {@link FoodComputerCommand}
+     * @param plantComputerCommand {@link PlantComputerCommand}
      */
-    public void sendEvent(FoodComputerCommand foodComputerCommand) {
-        this.eventListeners.forEach(listener -> listener.onQueueMessage(foodComputerCommand));
+    public void sendEvent(PlantComputerCommand plantComputerCommand) {
+        this.eventListeners.forEach(listener -> listener.onQueueMessage(plantComputerCommand));
     }
 
 }

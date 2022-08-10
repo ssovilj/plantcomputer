@@ -1,6 +1,6 @@
 package hr.unipu.recipe;
 
-import hr.unipu.foodcomputer.RecipeDTO;
+import hr.unipu.plantcomputer.RecipeDTO;
 import hr.unipu.ui.UiWindow;
 import javafx.application.Platform;
 import javafx.util.Duration;

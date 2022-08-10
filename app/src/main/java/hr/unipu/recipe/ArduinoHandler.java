@@ -1,7 +1,7 @@
 package hr.unipu.recipe;
 
-import hr.unipu.foodcomputer.FoodComputerAction;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerAction;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import hr.unipu.ui.UiWindow;
 
 import java.util.Map;
@@ -191,11 +191,11 @@ public class ArduinoHandler {
                 break;
             case "air_flush":
                 // Default state:
-                variableMeasured = Double.parseDouble(FoodComputerAction.AIR_CO_STATE.getActionValue());
+                variableMeasured = Double.parseDouble(PlantComputerAction.AIR_CO_STATE.getActionValue());
                 break;
             case "water_level_high":
                 // Default state:
-                variableMeasured = Double.parseDouble(FoodComputerAction.WATER_LEVEL_HIGH_STATE.getActionValue());
+                variableMeasured = Double.parseDouble(PlantComputerAction.WATER_LEVEL_HIGH_STATE.getActionValue());
                 break;
             default:
                 // code block
@@ -344,8 +344,8 @@ public class ArduinoHandler {
              *     )
              */
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_TURN_ON)); //always
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_TURN_ON)); //always
 
         }
         if (variableCommanded < 0.0) {
@@ -355,10 +355,10 @@ public class ArduinoHandler {
              *         ("chiller_compressor_1", actuator_csv_headers["chiller_compressor_1"])
              */
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HEATER_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHILLER_FAN_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.CHAMBER_FAN_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHILLER_FAN_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_TURN_ON));
 
         }
     }
@@ -383,8 +383,8 @@ public class ArduinoHandler {
              *  actuator_state["pump_3_ph_up_1"] = True
              */
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_PH_UP_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_PH_DOWN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_PH_UP_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_PH_DOWN_OFF));
 
         }
         if (variableCommanded < 0.0) {
@@ -392,8 +392,8 @@ public class ArduinoHandler {
              *         actuator_state["pump_4_ph_down_1"] = True
              */
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_PH_DOWN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_PH_UP_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_PH_DOWN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_PH_UP_OFF));
 
         }
     }
@@ -403,11 +403,11 @@ public class ArduinoHandler {
         // # Set actuator_state based on command
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_TURN_ON));
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.HUMIDIFIER_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_TURN_OFF));
         }
     }
 
@@ -424,13 +424,13 @@ public class ArduinoHandler {
         // # Set actuator_state based on command
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_A_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_B_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_A_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_B_OFF));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_A_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_A_OFF));
         }
     }
 
@@ -439,13 +439,13 @@ public class ArduinoHandler {
         // # Set actuator_state based on command
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_B_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_A_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_B_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_A_OFF));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.PUMP_NUTRIENT_B_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.PUMP_NUTRIENT_B_OFF));
         }
     }
 
@@ -454,11 +454,11 @@ public class ArduinoHandler {
         // # Set actuator_state based on command
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.AIR_FLUSH_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.AIR_FLUSH_TURN_ON));
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.AIR_FLUSH_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.AIR_FLUSH_TURN_OFF));
         }
     }
 
@@ -473,15 +473,15 @@ public class ArduinoHandler {
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_RED_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_BLUE_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_WHITE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_RED_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_BLUE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_WHITE_TURN_OFF));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_RED_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_RED_TURN_OFF));
         }
     }
 
@@ -490,15 +490,15 @@ public class ArduinoHandler {
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_BLUE_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_RED_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_WHITE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_BLUE_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_RED_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_WHITE_TURN_OFF));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_BLUE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_BLUE_TURN_OFF));
         }
     }
 
@@ -507,15 +507,15 @@ public class ArduinoHandler {
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_WHITE_TURN_ON));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_RED_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_BLUE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_WHITE_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_RED_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_BLUE_TURN_OFF));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
             //UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_TURN_OFF));
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.LIGHT_WHITE_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.LIGHT_WHITE_TURN_OFF));
         }
     }
 
@@ -534,12 +534,12 @@ public class ArduinoHandler {
         // # Set actuator_state based on command
         if (variableCommanded > 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_TURN_ON));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_TURN_ON));
 
         }
         if (variableCommanded < 0.0) {
             UiWindow.listActuatorCommands.clear();
-            UiWindow.listActuatorCommands.add(new FoodComputerCommand(FoodComputerAction.WATER_PUMP_TURN_OFF));
+            UiWindow.listActuatorCommands.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_TURN_OFF));
         }
     }
 

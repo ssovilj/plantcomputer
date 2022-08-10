@@ -4,8 +4,8 @@ import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import hr.unipu.client.MqttClientConnection;
 import hr.unipu.event.EventListener;
-import hr.unipu.foodcomputer.FoodComputerAction;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerAction;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -19,7 +19,7 @@ public class ActuatorsPanel extends HBox implements EventListener {
     private final Tile btGrowLight;
     //private final ToggleButton btGrowLight;
 
-    private FoodComputerAction selectedFoodComputerAction;
+    private PlantComputerAction selectedPlantComputerAction;
 
     private boolean blockSending = false;
 
@@ -53,7 +53,7 @@ public class ActuatorsPanel extends HBox implements EventListener {
     }
 
     @Override
-    public void onQueueMessage(FoodComputerCommand foodComputerCommand) {
+    public void onQueueMessage(PlantComputerCommand plantComputerCommand) {
 
     }
 }

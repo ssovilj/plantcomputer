@@ -2,7 +2,7 @@ package hr.unipu.ui;
 
 import hr.unipu.client.ReceivedMessage;
 import hr.unipu.event.EventListener;
-import hr.unipu.foodcomputer.FoodComputerCommand;
+import hr.unipu.plantcomputer.PlantComputerCommand;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
@@ -28,16 +28,16 @@ public class LogsPanel extends TableView implements EventListener {
         TableColumn colCommandAction = new TableColumn("Action ID");
         colCommandAction.setStyle("-fx-alignment: TOP-LEFT;");
         colCommandAction.setMinWidth(100);
-        colCommandAction.setCellValueFactory(new PropertyValueFactory<>("foodComputerCommand"));
-        colCommandAction.setCellFactory(column -> new TableCell<FoodComputerCommand, FoodComputerCommand>() {
+        colCommandAction.setCellValueFactory(new PropertyValueFactory<>("plantComputerCommand"));
+        colCommandAction.setCellFactory(column -> new TableCell<PlantComputerCommand, PlantComputerCommand>() {
             @Override
-            protected void updateItem(FoodComputerCommand foodComputerCommand, boolean empty) {
-                super.updateItem(foodComputerCommand, empty);
-                if (foodComputerCommand == null || empty) {
+            protected void updateItem(PlantComputerCommand plantComputerCommand, boolean empty) {
+                super.updateItem(plantComputerCommand, empty);
+                if (plantComputerCommand == null || empty) {
                     setText(null);
                     setStyle("");
                 } else {
-                    setText(foodComputerCommand.getId());
+                    setText(plantComputerCommand.getId());
                 }
             }
         });
@@ -46,10 +46,10 @@ public class LogsPanel extends TableView implements EventListener {
         TableColumn colActionName = new TableColumn("Action Name");
         colActionName.setStyle("-fx-alignment: TOP-LEFT;");
         colActionName.setMinWidth(100);
-        colActionName.setCellValueFactory(new PropertyValueFactory<>("foodComputerCommand"));
-        colActionName.setCellFactory(column -> new TableCell<FoodComputerCommand, FoodComputerCommand>() {
+        colActionName.setCellValueFactory(new PropertyValueFactory<>("plantComputerCommand"));
+        colActionName.setCellFactory(column -> new TableCell<PlantComputerCommand, PlantComputerCommand>() {
             @Override
-            protected void updateItem(FoodComputerCommand item, boolean empty) {
+            protected void updateItem(PlantComputerCommand item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null || empty) {
                     setText(null);
@@ -64,10 +64,10 @@ public class LogsPanel extends TableView implements EventListener {
         TableColumn colActionValue = new TableColumn("Action Value");
         colActionValue.setStyle("-fx-alignment: TOP-LEFT;");
         colActionValue.setMinWidth(100);
-        colActionValue.setCellValueFactory(new PropertyValueFactory<>("foodComputerCommand"));
-        colActionValue.setCellFactory(column -> new TableCell<FoodComputerCommand, FoodComputerCommand>() {
+        colActionValue.setCellValueFactory(new PropertyValueFactory<>("plantComputerCommand"));
+        colActionValue.setCellFactory(column -> new TableCell<PlantComputerCommand, PlantComputerCommand>() {
             @Override
-            protected void updateItem(FoodComputerCommand item, boolean empty) {
+            protected void updateItem(PlantComputerCommand item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null || empty) {
                     setText(null);
@@ -82,10 +82,10 @@ public class LogsPanel extends TableView implements EventListener {
         TableColumn colDataString = new TableColumn("Data String");
         colDataString.setStyle("-fx-alignment: TOP-CENTER;");
         colDataString.setMinWidth(300);
-        colDataString.setCellValueFactory(new PropertyValueFactory<>("foodComputerCommand"));
-        colDataString.setCellFactory(column -> new TableCell<FoodComputerCommand, FoodComputerCommand>() {
+        colDataString.setCellValueFactory(new PropertyValueFactory<>("plantComputerCommand"));
+        colDataString.setCellFactory(column -> new TableCell<PlantComputerCommand, PlantComputerCommand>() {
             @Override
-            protected void updateItem(FoodComputerCommand item, boolean empty) {
+            protected void updateItem(PlantComputerCommand item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null || empty) {
                     setText(null);
@@ -106,13 +106,13 @@ public class LogsPanel extends TableView implements EventListener {
     }
 
     /**
-     * {@link FoodComputerCommand} received from Mosquitto.
+     * {@link PlantComputerCommand} received from Mosquitto.
      * We put it on top of our internal list so it gets added to the table.
      *
-     * @param foodComputerCommand The {@link FoodComputerCommand}
+     * @param plantComputerCommand The {@link PlantComputerCommand}
      */
     @Override
-    public void onQueueMessage(FoodComputerCommand foodComputerCommand) {
-        this.list.add(0, new ReceivedMessage(foodComputerCommand));
+    public void onQueueMessage(PlantComputerCommand plantComputerCommand) {
+        this.list.add(0, new ReceivedMessage(plantComputerCommand));
     }
 }
