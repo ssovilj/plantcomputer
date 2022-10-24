@@ -115,7 +115,7 @@ public class PlantComputerCommand {
     public String getActionValue() {
         return actionValue;
     }
-    public PlantComputerAction getFoodComputerAction() {
+    public PlantComputerAction getPlantComputerAction() {
         return plantComputerAction;
     }
 

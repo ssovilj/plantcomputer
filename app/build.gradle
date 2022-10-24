@@ -10,15 +10,22 @@ plugins {
     // - Plugin which provides remote command execution and file transfer features.
     id 'org.hidetake.ssh' version "2.10.1"
 
+    // Spring Boot plugin.
     id 'org.springframework.boot' version '2.5.2'
+
 }
 
 apply plugin: 'io.spring.dependency-management'
 
+
+/**
+ ******************  JavaFX Configuration ******************
+ */
+
 /**
  * Version, group, JAR name (instead of module name).
  */
-archivesBaseName = 'app'    // Instead of long name: 14_Hello_Mosquitto_LED_controller.jar
+archivesBaseName = 'iotapp'    // Instead of long name: Plant_Computer_Gateway.jar
 group 'hr.unipu'
 version ''     // '1.0-SNAPSHOT'
 
@@ -71,6 +78,7 @@ dependencies {
 
 }
 
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
@@ -107,16 +115,28 @@ tasks.withType(JavaCompile) {
  */
 remotes {
     rpi01 {
-        host = '192.168.15.228'   // or VG: '192.168.5.10', ZG: '192.168.0.31', Ethernet: '192.168.3.2', 'raspberrypi.local'
-        user = 'pi'
-        password = 'raspberry'
+        host = '192.168.15.241'   // or VG: '192.168.5.10', ZG: '192.168.0.17', Ethernet: '192.168.3.2', 'raspberrypi.local'
+        user = 'pi'     // pi
+        password = 'Nevi123!'  //raspberry
     }
 }
 
 /**
  * Create Fat Jar.
  */
+// - Execution failed for task ':app:jar'.
+//   Entry module-info.class is a duplicate but no duplicate handling strategy has been set.
+
+// Generating Fat Jar.
+bootJar {
+    enabled = true
+}
+
+// Generates plain jar.
 jar {
+    enabled = false
+    duplicatesStrategy = DuplicatesStrategy.WARN
+
     manifest {
         attributes 'Main-Class': 'hr.unipu.LauncherJava'    // package.myMainClassName
         //attributes 'Main-Class': 'hr.unipu.FoodComputerControllerApplicationJava'    // package.myMainClassName
@@ -130,8 +150,12 @@ jar {
  * Deploy task.
  */
 task deploy {
-    dependsOn 'jar'
+    //dependsOn 'jar'       // Generates "-plain" jar. (Spring Boot)
+    dependsOn 'bootJar'     // Generates Fat jar. (Spring Boot)
     doLast {
+        ssh.settings {
+            knownHosts = allowAnyHosts
+        }
         ssh.run {
             session(remotes.rpi01) {
                 // Testing
@@ -181,3 +205,98 @@ task printClasspath {
         println sourceSets.main.runtimeClasspath.asPath
     }
 }
+
+
+
+/**
+ ******************  JPro: Java Configuration ******************
+ */
+/*
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.google.osdetector'
+apply plugin: 'org.openjfx.javafxplugin'
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml', 'javafx.media', 'javafx.web' ]
+}
+
+dependencies {
+    implementation "com.sandec.jpro:jpro-web-core:0.8.1"
+}
+
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+ext.platform = osdetector.os == 'osx' ? 'mac' : osdetector.os == 'windows' ? 'win' : osdetector.os
+
+//dependencies {
+//    // Add your dependencies here, for example:
+//    // compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.14'
+//    compile "org.openjfx:javafx-base:17.0.1:$platform"
+//    compile "org.openjfx:javafx-graphics:17.0.1:$platform"
+//    compile "org.openjfx:javafx-controls:17.0.1:$platform"
+//    compile "org.openjfx:javafx-fxml:17.0.1:$platform"
+//    compile "org.openjfx:javafx-media:17.0.1:$platform"
+//    compile "org.openjfx:javafx-web:17.0.1:$platform"
+//}
+
+
+//compileJava {
+//    doFirst {
+//        options.compilerArgs = [
+//                '--module-path', classpath.asPath,
+//                '--add-modules', 'javafx.fxml,javafx.controls'
+//        ]
+//    }
+//}
+
+
+//run {
+//    doFirst {
+//        jvmArgs = [
+//                '--module-path', classpath.asPath,
+//                '--add-modules', 'javafx.fxml,javafx.controls'
+//        ]
+//    }
+//}
+
+ */
+
+
+/**
+ ******************  JPro Configuration ******************
+ */
+/*
+apply plugin: 'com.sandec.jpro'
+ */
+
+/**
+ * App Main Class
+ */
+//mainClassName = 'com.jpro.hellojpro.HelloJPro'
+//mainClassName = 'com.jpro.hellojpro.HelloJProFXML'
+/*
+mainClassName = 'hr.unipu.LauncherJava'
+*/
+
+/**
+ * jpro settings
+ */
+
+/*
+jpro {
+    // for debugging
+    // JVMArgs << '-agentlib:jdwp=transport=dt_socket,server=n,address=5006,suspend=y'
+
+    JVMArgs << '-Xmx1000m'
+
+    //jpro server port
+    port = 8080
+
+}
+*/
