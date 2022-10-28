@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.FlowGridPane;
+import hr.unipu.PlantComputerApplicationJava;
 import hr.unipu.client.MqttClientConnection;
 import hr.unipu.event.EventListener;
 import hr.unipu.event.EventManager;
@@ -818,31 +819,52 @@ public class UiWindow extends FlowGridPane implements EventListener {
                     //sparkLineSensor6.setValue(20);
 
                     /**
-                     * TESTING: sensor readings as MQTT message.
+                     * TESTING/SIMULATION: sensor readings as MQTT message.
                      */
                     // Sending command for reading sensors to MQTT broker.
-                    listStateReadings.clear();
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_AIR_STATE.setActionValue(rndValue1.toString())));
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDITY_AIR_STATE.setActionValue(rndValue2.toString())));
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CONDUCTIVITY_WATER_STATE.setActionValue(rndValue3.toString())));
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.PH_WATER_STATE.setActionValue(rndValue4.toString())));
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_WATER_STATE.setActionValue(rndValue5.toString())));
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_INTENSITY_STATE.setActionValue(rndValue6.toString())));
+                    boolean simulationMode = false;
+                    if (PlantComputerApplicationJava.parameters != null) {     // if contains parameters
+                        Map<String, String> namedParams = PlantComputerApplicationJava.parameters.getNamed();
+                        if (namedParams.containsKey("simulationMode")) {   // if contains testing argument
+                            simulationMode = Boolean.parseBoolean(namedParams.get("testing"));     // run --args='--testing=true'
+                        }
+                    }
+                    if (simulationMode==true) {
+                        listStateReadings.clear();
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_AIR_STATE.setActionValue(rndValue1.toString())));
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDITY_AIR_STATE.setActionValue(rndValue2.toString())));
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CONDUCTIVITY_WATER_STATE.setActionValue(rndValue3.toString())));
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.PH_WATER_STATE.setActionValue(rndValue4.toString())));
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.TEMPERATURE_WATER_STATE.setActionValue(rndValue5.toString())));
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_INTENSITY_STATE.setActionValue(rndValue6.toString())));
 
-                    String isBtGrowLightOn; if (btGrowLight.isActive())  isBtGrowLightOn="on"; else isBtGrowLightOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_STATE.setActionValue(isBtGrowLightOn)));
-                    String isBtHumidifierOn; if (btHumidifier.isActive())  isBtHumidifierOn="on"; else isBtHumidifierOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_STATE.setActionValue(isBtHumidifierOn)));
-                    String isBtCoolingFanOn; if (btCoolingFan.isActive())  isBtCoolingFanOn="on"; else isBtCoolingFanOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.COOLING_FAN_STATE.setActionValue(isBtCoolingFanOn)));
-                    String isBtChamberFanOn; if (btChamberFan.isActive())  isBtChamberFanOn="on"; else isBtChamberFanOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_STATE.setActionValue(isBtChamberFanOn)));
-                    String isBtHeaterOn; if (btHeater.isActive())  isBtHeaterOn="on"; else isBtHeaterOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_STATE.setActionValue(isBtHeaterOn)));
-                    String isBtWaterCirculationPumpOn; if (btWaterCirculationPump.isActive())  isBtWaterCirculationPumpOn="on"; else isBtWaterCirculationPumpOn="off";
-                    listStateReadings.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_STATE.setActionValue(isBtWaterCirculationPumpOn)));
+                        String isBtGrowLightOn;
+                        if (btGrowLight.isActive()) isBtGrowLightOn = "on";
+                        else isBtGrowLightOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.LIGHT_STATE.setActionValue(isBtGrowLightOn)));
+                        String isBtHumidifierOn;
+                        if (btHumidifier.isActive()) isBtHumidifierOn = "on";
+                        else isBtHumidifierOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HUMIDIFIER_STATE.setActionValue(isBtHumidifierOn)));
+                        String isBtCoolingFanOn;
+                        if (btCoolingFan.isActive()) isBtCoolingFanOn = "on";
+                        else isBtCoolingFanOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.COOLING_FAN_STATE.setActionValue(isBtCoolingFanOn)));
+                        String isBtChamberFanOn;
+                        if (btChamberFan.isActive()) isBtChamberFanOn = "on";
+                        else isBtChamberFanOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.CHAMBER_FAN_STATE.setActionValue(isBtChamberFanOn)));
+                        String isBtHeaterOn;
+                        if (btHeater.isActive()) isBtHeaterOn = "on";
+                        else isBtHeaterOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.HEATER_TURN_STATE.setActionValue(isBtHeaterOn)));
+                        String isBtWaterCirculationPumpOn;
+                        if (btWaterCirculationPump.isActive()) isBtWaterCirculationPumpOn = "on";
+                        else isBtWaterCirculationPumpOn = "off";
+                        listStateReadings.add(new PlantComputerCommand(PlantComputerAction.WATER_PUMP_STATE.setActionValue(isBtWaterCirculationPumpOn)));
 
-                    UiWindow.sendMessageStateReadings();
+                        UiWindow.sendMessageStateReadings();
+                    }
 
                     // Update UI after state readings received. (REDUNDANT SINCE BINDING)
 //                    temperatureTile.setValue(sparkLineSensor1.getValue());

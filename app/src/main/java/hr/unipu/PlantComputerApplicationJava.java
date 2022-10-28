@@ -9,13 +9,16 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Food Computer Controller JavaFX class.
  * - 'Application' class provides lifecycle functions (initializing, launching, starting, stopping) during runtime.
  * - Mechanism to launch JavaFX GUI components separate from the 'main' thread.
  */
 public class PlantComputerApplicationJava extends Application {
-
+    public static Parameters parameters = null;
 
     /**
      * JavaFX app entry point. (main thread)
@@ -38,6 +41,17 @@ public class PlantComputerApplicationJava extends Application {
      */
     @Override
     public void start(Stage stage) {
+
+        // Get application parameters
+        parameters = this.getParameters();
+        Map<String, String> namedParams = parameters.getNamed();
+        List<String> unnamedParams = parameters.getUnnamed();
+        List<String> rawParams = parameters.getRaw();
+        String paramStr = "Named Parameters: " + namedParams + "\n" +
+                "Unnamed Parameters: " + unnamedParams + "\n" +
+                "Raw Parameters: " + rawParams;
+        System.out.println(paramStr);
+
         EventManager eventManager = new EventManager();
 
         // 5.17 (Vg), 0.30 (Zg), 3.2 (Ethernet direct)
@@ -63,5 +77,7 @@ public class PlantComputerApplicationJava extends Application {
         stage.setScene(scene);
         //stage.setFullScreen(true);
         stage.show();
+
     }
+
 }
