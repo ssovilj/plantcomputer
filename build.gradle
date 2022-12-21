@@ -1,5 +1,7 @@
 /**
- * Root build script.
+ * Root project.
+ *
+ * @author [Siniša Sovilj](mailto:sinisa.sovilj@unipu.hr)
  */
 
 group 'hr.unipu'
@@ -10,26 +12,23 @@ allprojects {
         mavenCentral()
     }
 
-    /**
-     ******************  JPro: Script Configuration ******************
-     */
-    // - Pro supports Gradle in the versions 2.x until 7.x. We suggest to use 7.x.
-    // - ./gradlew jproRun
-    // - JavaFX isn't loaded by the SystemClassLoader. This typically happens, when using a JDK/JRE which bundles JavaFX.
-    //   Please use a JDK/JRE which does not bundle JavaFX.
-    /*
-    buildscript {
-        repositories {
-            gradlePluginPortal()
-            maven {
-                url "https://sandec.jfrog.io/artifactory/repo"
-            }
-        }
-        dependencies {
-            classpath 'com.sandec.jpro:jpro-plugin-gradle:2022.1.4'
+}
+
+/**
+ ******************  JPro Script Configuration ******************
+ */
+buildscript {
+    repositories {
+        mavenCentral()
+
+        maven {
+            url "https://sandec.jfrog.io/artifactory/repo"
         }
     }
-     */
+
+    dependencies {
+        classpath 'com.sandec.jpro:jpro-plugin-gradle:2022.1.8'
+    }
 }
 
 subprojects {
