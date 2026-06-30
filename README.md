@@ -104,9 +104,8 @@ or to run all available Kotlin test run:
 - **Siniša Sovilj**<sup>1</sup> <sinisa.sovilj@unipu.hr>
 - **Dalibor Fonović**<sup>1</sup> <dalibor.fonovic@unipu.hr>
 - **Krešimir Pripužić**<sup>2</sup> <kresimir.pripuzic@fer.hr>
-- **Nikola Tanković**<sup>1</sup> <nikola.tankovic@unipu.hr>
 
-<sup>1 = Juraj Dobrila University of Pula, Faculty of Informatics, HR-52100 Pula, CROATIA </sup>  \
+<sup>1 = Juraj Dobrila University of Pula, Faculty of Engineering, HR-52100 Pula, CROATIA </sup>  \
 <sup>2 = University of Zagreb, Faculty of Electrical Engineering and Computing, HR-10000 Zagreb, CROATIA </sup>
 
 
