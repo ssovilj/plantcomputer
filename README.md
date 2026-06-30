@@ -1,4 +1,4 @@
-# “Plant Computer” – open-spurce implementation in Java/Kotlin
+# “Plant Computer” – open-source implementation in Java/Kotlin
 
 **Plant Computer** is a new, improved open-source version of a 
 computer system for plant replication in a controlled environment. 
